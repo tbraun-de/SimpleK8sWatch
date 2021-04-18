@@ -2,6 +2,10 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <PackageId>SimpleK8sWatch</PackageId>
+        <Version>0.0.1</Version>
+        <Authors>Tobias Braun</Authors>
+        <Company>tobi.braun (at) gmail (dot) com</Company>
     </PropertyGroup>
 
     <ItemGroup>
