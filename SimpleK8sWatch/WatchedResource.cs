@@ -14,7 +14,7 @@ namespace SimpleK8sWatch
         IWatchedResource<IMetadata<V1ObjectMeta>> where TEntity : IMetadata<V1ObjectMeta>
         where TEntityList : IItems<TEntity>
     {
-        private readonly ILogger<WatchedResource<TEntity, TEntityList>> _logger;
+        private readonly ILogger _logger;
 
         // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
         private readonly Thread _makeSureWatcherIsRunning;
@@ -26,7 +26,7 @@ namespace SimpleK8sWatch
         private Watcher<TEntity> _watcher;
 
         public WatchedResource(Func<bool, int?, Task<HttpOperationResponse<TEntityList>>> watcherMethod,
-            ILogger<WatchedResource<TEntity, TEntityList>> logger = null, CancellationToken cancellationToken = default)
+            ILogger logger = null, CancellationToken cancellationToken = default)
         {
             _watcherMethod = watcherMethod;
             _logger = logger;
@@ -105,7 +105,7 @@ namespace SimpleK8sWatch
                         if (changed)
                         {
                             _logger?.LogDebug(
-                                $"Emitting entity change event {type}: {item.Metadata.Name} ({item.GetType().Name}");
+                                $"Emitting entity change event {type}: {item.Metadata.Name} ({item.GetType().Name})");
                             EntityChanged?.Invoke(type, item);
                         }
                     }, exception =>

@@ -37,7 +37,7 @@ namespace SimpleK8sWatchExamples
             {
                 Console.WriteLine($"Entity changed event [{type}]: {entity.Metadata.Name}");
             };
-
+            
             // wait for keypress
             Console.WriteLine("Press ESC to stop");
             do
