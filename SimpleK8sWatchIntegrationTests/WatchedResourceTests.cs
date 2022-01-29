@@ -77,7 +77,11 @@ namespace SimpleK8sWatchIntegrationTests
             using var watch = new WatchedResource<V1ConfigMap, V1ConfigMapList>((b, limit) =>
                 _k8S.ListNamespacedConfigMapWithHttpMessagesAsync(TestNamespace, watch: b, limit: limit));
             var events = new List<(WatchEventType type, V1ConfigMap entity)>();
-            watch.EntityChanged += (type, entity) => { events.Add((type, (V1ConfigMap) entity)); };
+            watch.EntityChanged += (type, entity) =>
+            {
+                if(((V1ConfigMap)entity).Metadata.Name.StartsWith("testconfigmap"))
+                    events.Add((type, (V1ConfigMap) entity));
+            };
             Thread.Sleep(1000);
             Assert.Empty(events);
             var configmaps = watch.GetAll<V1ConfigMap>().ToList();
@@ -88,7 +92,7 @@ namespace SimpleK8sWatchIntegrationTests
             {
                 Metadata = new V1ObjectMeta
                 {
-                    Name = "configmap1",
+                    Name = "testconfigmap1",
                     NamespaceProperty = TestNamespace
                 },
                 Data = new Dictionary<string, string>
@@ -101,7 +105,7 @@ namespace SimpleK8sWatchIntegrationTests
             {
                 Metadata = new V1ObjectMeta
                 {
-                    Name = "configmap2",
+                    Name = "testconfigmap2",
                     NamespaceProperty = TestNamespace
                 },
                 Data = new Dictionary<string, string>
