@@ -1,6 +1,6 @@
 # SimpleK8sWatch
 
-.NET 5.0 library (C#) providing an easy to use watcher for kubernetes events.
+.NET standard 2.1 library (C#) providing an easy to use watcher for kubernetes events.
 
 ## Why
 
